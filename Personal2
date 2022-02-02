@@ -1,0 +1,220 @@
+import java.util.Scanner;
+
+class LinerSpecs {
+	int lengthOfShip;
+	int widthOfShip;
+	int guests;
+	double insuranceMoney;
+	int employees;
+	int totalPassengers;
+	int lifeboats;
+}
+
+abstract class Liner {
+	double equipmentValue[] = {80, 121, 1.80, 7, 25, 5, 120, 2, 114.26, 9.50, 5, 8, 19, 71.30, 13};
+	String equipmentName[] = {"Life Jacket", "Box of food supply", "Litres of water", "Drinking vessel", "Fishing tackle", "Survival manual", "Compass","Bucket", "Hatchet", "Flare kit", "Electronic torch", "Whistle", "Tin opener", "Rescue quit", "SART", "Jack knife"};
+	double sprinklerPrice = 2;
+	double fireExtinguisherPrice = 35;
+}
+
+class LifeboatSmall extends Liner {
+	String welcomeMessage = "You have chosen, Small Lifeboats!";
+	int risk = 10;
+	double cost =27000;
+	int equipments[] = {75 , 4, (75*5), 75, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
+	int shipCapacity = 32;
+}
+
+class LifeboatMedium extends Liner {
+	String welcomeMessage = "You have chosen, Medium Lifeboats!";
+	int risk = 5;
+	double cost =38000;
+	int equipments[] = {113 , 5, 565, 113, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1};
+	int shipCapacity = 50;
+}
+
+class LifeboatHuge extends Liner {
+	String welcomeMessage = "You have chosen, Huge Lifeboats!";
+	int risk = 0;
+	double cost = 50000;
+	int equipments[] = {150, 7, 750, 150, 1, 1, 1, 2, 2, 1, 1, 1, 3, 2, 1, 1};
+	int shipCapacity = 75;
+}
+
+class Liferafts extends Liner {
+	String welcomeMessage = "You have chosen, Liferafts!";
+	int risk = 15;
+	double cost =27000;
+	int equipments[] = {35 , 2, (35*5), 35, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1};
+	int shipCapacity = 15;
+
+}
+
+class HighEndEmployees {
+	int risk = 5;
+	double cost = 4000;
+	String welcomeMessage = "You have chosen, High End Employees!";
+}
+
+class MiddleEndEmployees {
+	int risk = 10;
+	double cost = 2500;
+	String welcomeMessage = "You have chosen, Mid End Employees!";
+}
+
+class LowEndEmployees {
+	int risk = 15;
+	double cost = 1500;
+	String welcomeMessage = "You have chosen, Low End Employees!";
+}
+
+public class Project_coding {
+    //Calculate the salary of hourly employees.
+	
+	static Scanner input = new Scanner (System.in);
+	static LinerSpecs ship = new LinerSpecs();
+	static int decision;
+
+	static void display() {
+		System.out.print("Welcome to the ship safety equipment repairment system!\n");
+		System.out.println("This program is meant to predict how many budget be put in the safety equipment of a cruise liner.");
+		System.out.println("We will start by choosing the type of cruising you will do. \n Please select the type of travelling your liner will do : ");
+		System.out.println("1.International cruising\t\t2.Domestic cruising");
+	}
+	
+	static void phase1(boolean x) {
+		System.out.print("Please enter the length and width of ship \n with the format of (width length) : ");
+		String s = input.nextLine();
+		String[] str = s.split(" ");
+		ship.lengthOfShip = Integer.parseInt(str[0]);
+		ship.widthOfShip = Integer.parseInt(str[1]);
+		double[] firstArray = array1(ship.lengthOfShip, ship.widthOfShip);
+		System.out.print("Please insert the number of guests that will be aboard on the ship : ");
+		ship.guests = Integer.parseInt(input.nextLine());
+		System.out.print("Please insert the number of insurance money per-guests in the ship : ");
+		ship.insuranceMoney = Double.parseDouble(input.nextLine());	
+		System.out.print("Please insert the number of employees that will be employed on the ship : ");
+		ship.employees = Integer.parseInt(input.nextLine());
+		ship.totalPassengers = ship.guests + ship.employees;
+		System.out.println("Please insert the type of employees that will be aboard on the ship.\n1.High end employees\t\t2.Mid end employees\t\t3.Low end employees");
+		int typeOfEmployee = Integer.parseInt(input.nextLine());
+		while(typeOfEmployee !=1 && typeOfEmployee !=2 && typeOfEmployee !=3) {
+			System.out.println("Invalid, please input again");
+			typeOfEmployee = Integer.parseInt(input.nextLine());
+		}
+		if (typeOfEmployee == 1) {
+			HighEndEmployees employee = new HighEndEmployees();
+			double eCost = employee.cost;
+			int eRisk = employee.risk;
+			System.out.println(employee.welcomeMessage);
+			phase2(x);
+		} else
+		if (typeOfEmployee == 2) {
+			MiddleEndEmployees employee = new MiddleEndEmployees();
+			double eCost = employee.cost;
+			int eRisk = employee.risk;
+			System.out.println(employee.welcomeMessage);
+			phase2(x);
+		} else
+		if (typeOfEmployee == 3) {
+			LowEndEmployees employee = new LowEndEmployees();
+			double eCost = employee.cost;
+			int eRisk = employee.risk;
+			System.out.println(employee.welcomeMessage);
+			phase2(x);
+		}
+		
+		}
+	
+	static void phase2(boolean x) {
+		if(x == true) {
+			System.out.print("Please insert the type of lifeboat you want to have in your cruise liner\n1.Huge\t\t2.Medium");
+			int lifeboatType = Integer.parseInt(input.nextLine());
+			while(lifeboatType !=1 && lifeboatType !=2) {
+				System.out.print("\nInvalid input, please try again");
+				lifeboatType = Integer.parseInt(input.nextLine());
+			}
+			if (lifeboatType == 1) {
+				LifeboatHuge lifeboat = new LifeboatHuge();
+				System.out.println(lifeboat.welcomeMessage);
+			} else
+			if (lifeboatType == 2) {
+				LifeboatMedium lifeboat = new LifeboatMedium();
+				System.out.println(lifeboat.welcomeMessage);
+			}
+		} else
+		if(x == false) {
+			System.out.print("Please insert the type of lifeboat you want to have in your cruise liner\n1.Huge\t\t2.Medium\t\t3.Small\t\t4.Liferafts");
+			int lifeboatType = Integer.parseInt(input.nextLine());
+			while(lifeboatType !=1 && lifeboatType !=2 && lifeboatType != 3 && lifeboatType != 4) {
+				System.out.print("\nInvalid input, please try again");
+				lifeboatType = Integer.parseInt(input.nextLine());
+			}
+			if (lifeboatType == 1) {
+				LifeboatHuge lifeboat = new LifeboatHuge();
+				System.out.println(lifeboat.welcomeMessage);
+				phase3(lifeboat);
+			} else
+			if (lifeboatType == 2) {
+				LifeboatMedium lifeboat = new LifeboatMedium();
+				System.out.println(lifeboat.welcomeMessage);
+				phase3(lifeboat);
+			} else
+			if (lifeboatType == 3) {
+				LifeboatSmall lifeboat = new LifeboatSmall();
+				System.out.println(lifeboat.welcomeMessage);
+				phase3(lifeboat);
+			}
+			if (lifeboatType == 4) {
+				Liferafts lifeboat = new Liferafts();
+				System.out.println(lifeboat.welcomeMessage);
+				phase3(lifeboat);
+			}
+		}
+		
+	}
+	
+	static void phase3() {
+		
+	}
+	
+	static double[] array1(double x, double y) {
+		double ship2DApproxSize =(double) (x + y);
+		double distanceToBeAchieved =(double) ((ship2DApproxSize * 2)/5);
+		int sprinklerApprox = (int) ( 17 * ship2DApproxSize);
+		int fireExtinguisherApprox = (int) ((ship2DApproxSize * 5)/3);
+		return new double[] {ship2DApproxSize, distanceToBeAchieved, sprinklerApprox, fireExtinguisherApprox};
+	}
+	
+	static int lifeboatCalculation(int X,int Y) {
+		 return (int) (((X * 37.5)/100)/Y)*2;
+	 }
+	
+	static void equalBarrier() {
+		System.out.println("==========================================================");
+	}
+	
+	static void stripeBarrier() {
+		System.out.println("---------------------------------------------------------");
+	}
+	
+	public static void main(String[] args) {
+		int typeOfTravel;
+		
+		display();
+		typeOfTravel = Integer.parseInt(input.nextLine());
+		while(typeOfTravel != 1 && typeOfTravel != 2) {
+			System.out.println("Invalid, please input again.");
+			typeOfTravel = Integer.parseInt(input.nextLine());
+		}
+		boolean travelBool;
+		if (typeOfTravel == 1) {
+			travelBool = true;
+			phase1(travelBool);
+		} else 
+		if (typeOfTravel == 2) {
+			travelBool = false;
+			phase1(travelBool);
+		}
+	}
+}
